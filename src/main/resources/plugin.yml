@@ -2,3 +2,5 @@ name: WowSpigot
 version: 1.0.0
 main: com.github.mouse0w0.wowspigot.WowSpigot
 authors: [Mouse0w0]
+commands:
+  wow:

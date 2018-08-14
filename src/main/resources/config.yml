@@ -1,0 +1,4 @@
+# 验证重试次数
+VerificationRetryCount: 3
+# 客户端是否必须使用Wow库
+MustUseWow: false

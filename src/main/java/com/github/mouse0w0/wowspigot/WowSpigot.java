@@ -1,7 +1,10 @@
 package com.github.mouse0w0.wowspigot;
 
 import com.github.mouse0w0.wow.network.NetworkManager;
+import com.github.mouse0w0.wow.profile.User;
 import com.github.mouse0w0.wowspigot.network.SpigotNetworkManager;
+import com.github.mouse0w0.wowspigot.network.handler.ClientVerificationPacketHandler;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class WowSpigot extends JavaPlugin {
@@ -15,9 +18,13 @@ public class WowSpigot extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+        WowConfig.reload();
+
         network = new SpigotNetworkManager();
         network.init();
-        getServer().getPluginManager().registerEvents(new WowSpigotListener(), this);
+
+        getCommand("wow").setExecutor(new WowCommand());
     }
 
     public static WowSpigot getInstance() {
@@ -26,5 +33,13 @@ public class WowSpigot extends JavaPlugin {
 
     public static NetworkManager getNetwork() {
         return network;
+    }
+
+    public static User getProfile(Player player) {
+        return ClientVerificationPacketHandler.getProfile(player);
+    }
+
+    public static boolean isInitialized(Player player) {
+        return ClientVerificationPacketHandler.isInitialized(player);
     }
 }

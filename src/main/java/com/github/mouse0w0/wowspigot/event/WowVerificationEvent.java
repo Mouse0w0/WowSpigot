@@ -1,20 +1,29 @@
 package com.github.mouse0w0.wowspigot.event;
 
+import com.github.mouse0w0.wow.profile.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
 public class WowVerificationEvent extends PlayerEvent {
 
-    private final int internalVersion;
+    private final User user;
 
-    public WowVerificationEvent(Player who, int internalVersion) {
+    public WowVerificationEvent(Player who, User user) {
         super(who);
-        this.internalVersion = internalVersion;
+        this.user = user;
     }
 
-    public int getInternalVersion() {
-        return internalVersion;
+    public int getVersion() {
+        return user.getVersion();
+    }
+
+    public boolean isSupport() {
+        return user.isSupport();
+    }
+
+    public User getWowProfile() {
+        return user;
     }
 
     private static final HandlerList handlers = new HandlerList();

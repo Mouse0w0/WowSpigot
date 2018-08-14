@@ -14,6 +14,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+        <wowcommon.version>c5d6fafa75</wowcommon.version>
     </properties>
 
     <repositories>
@@ -39,7 +40,7 @@
         <dependency>
             <groupId>com.github.Mouse0w0</groupId>
             <artifactId>WowCommon</artifactId>
-            <version>f90c619acc</version>
+            <version>${wowcommon.version}</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>

@@ -4,9 +4,10 @@ import com.github.mouse0w0.wow.WowPlatform;
 import com.github.mouse0w0.wow.network.NetworkException;
 import com.github.mouse0w0.wow.network.NetworkManagerBase;
 import com.github.mouse0w0.wow.network.Packet;
-import com.github.mouse0w0.wow.network.packet.common.VerificationPacket;
+import com.github.mouse0w0.wow.network.packet.client.ClientVerificationPacket;
+import com.github.mouse0w0.wow.network.packet.server.ServerVerificationPacket;
 import com.github.mouse0w0.wowspigot.WowSpigot;
-import com.github.mouse0w0.wowspigot.network.handler.VerificationPacketHandler;
+import com.github.mouse0w0.wowspigot.network.handler.ClientVerificationPacketHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.bukkit.Bukkit;
@@ -19,7 +20,8 @@ public class SpigotNetworkManager extends NetworkManagerBase {
     private final Messenger messenger = Bukkit.getMessenger();
 
     public SpigotNetworkManager() {
-        register(VerificationPacket.class, new VerificationPacketHandler());
+        register(ServerVerificationPacket.class, null);
+        register(ClientVerificationPacket.class, new ClientVerificationPacketHandler());
     }
 
     public void init() {
