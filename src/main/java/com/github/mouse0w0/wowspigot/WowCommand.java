@@ -31,7 +31,7 @@ public class WowCommand implements CommandExecutor {
 
     private void profile(CommandSender sender) {
         if(sender instanceof Player) {
-            User user = WowSpigot.getProfile().getProfile((Player) sender);
+            User user = WowSpigot.getProfile((Player) sender);
             sender.sendMessage("Wow IsInitialized: " + (user != null) + " Version: " + (user == null ? 0 : user.getVersion()));
         }
     }
