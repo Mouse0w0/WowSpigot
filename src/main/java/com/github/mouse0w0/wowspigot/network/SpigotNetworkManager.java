@@ -25,23 +25,25 @@ public class SpigotNetworkManager extends NetworkManagerBase {
     }
 
     public void init() {
-        messenger.registerIncomingPluginChannel(WowSpigot.getInstance(), WowPlatform.NAME, new PluginMessageListener() {
+        messenger.registerIncomingPluginChannel(WowSpigot.getInstance(), WowPlatform.getNetworkChannelName(), new PluginMessageListener() {
             @Override
             public void onPluginMessageReceived(String channel, Player player, byte[] message) {
                 handle(player, Unpooled.wrappedBuffer(message));
             }
         });
-        messenger.registerOutgoingPluginChannel(WowSpigot.getInstance(), WowPlatform.NAME);
+        messenger.registerOutgoingPluginChannel(WowSpigot.getInstance(), WowPlatform.getNetworkChannelName());
     }
 
     @Override
     public void send(Object target, Packet packet) {
         if(!(target instanceof Player))
             throw new NetworkException("Couldn't send packet to this target.");
+        super.send(target, packet);
+    }
 
+    @Override
+    protected void send(Object target, ByteBuf byteBuf) {
         Player player = (Player) target;
-        ByteBuf buf = createBuffer(packet.getClass());
-        packet.write(buf);
-        player.sendPluginMessage(WowSpigot.getInstance(), WowPlatform.NAME, buf.array());
+        player.sendPluginMessage(WowSpigot.getInstance(), WowPlatform.getName(), byteBuf.array());
     }
 }

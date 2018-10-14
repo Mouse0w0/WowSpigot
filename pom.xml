@@ -14,15 +14,15 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
-        <wowcommon.version>f423ed8834</wowcommon.version>
+        <wowcommon.version>8298a46b3c</wowcommon.version>
     </properties>
 
     <repositories>
-        <repository>
+        <!--<repository>
             <id>lss233-minecraft</id>
             <name>Lss233's Minecraft Repository</name>
             <url>https://lss233.com/artifactory/minecraft</url>
-        </repository>
+        </repository>-->
         <repository>
             <id>jcenter-repo</id>
             <url>https://jcenter.bintray.com/</url>
@@ -39,9 +39,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.Mouse0w0</groupId>
+            <!--<groupId>com.github.Mouse0w0</groupId>
             <artifactId>WowCommon</artifactId>
-            <version>${wowcommon.version}</version>
+            <version>${wowcommon.version}</version>-->
+            <groupId>com.github.mouse0w0</groupId>
+            <artifactId>wow</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>

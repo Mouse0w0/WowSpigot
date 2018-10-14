@@ -69,7 +69,7 @@ public class ClientVerificationPacketHandler implements PacketHandler<ClientVeri
                     cancel();
                     return;
                 }
-                WowSpigot.getNetwork().send(event.getPlayer(), new ServerVerificationPacket(WowPlatform.INTERNAL_VERSION));
+                WowSpigot.getNetwork().send(event.getPlayer(), new ServerVerificationPacket(WowPlatform.getInternalVersion(), WowConfig.getServerUUID()));
                 count++;
             }
         }.runTaskTimerAsynchronously(WowSpigot.getInstance(), 20L, 20L);

@@ -34,4 +34,8 @@ public class SpigotUser implements User {
     public int getVersion() {
         return version;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }
