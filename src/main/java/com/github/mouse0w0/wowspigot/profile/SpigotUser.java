@@ -26,6 +26,11 @@ public class SpigotUser implements User {
     }
 
     @Override
+    public Object getSource() {
+        return player;
+    }
+
+    @Override
     public boolean isSupport() {
         return version > 0;
     }
