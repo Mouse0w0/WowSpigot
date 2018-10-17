@@ -2,3 +2,5 @@
 VerificationRetryCount: 3
 # 客户端是否必须使用Wow库
 MustUseWow: false
+# Debug模式
+Debug: false

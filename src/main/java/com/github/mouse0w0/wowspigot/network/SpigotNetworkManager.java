@@ -8,6 +8,7 @@ import com.github.mouse0w0.wow.network.packet.client.ClientVerificationPacket;
 import com.github.mouse0w0.wow.network.packet.client.KeyBindingActionPacket;
 import com.github.mouse0w0.wow.network.packet.server.RegisterKeyBindingPacket;
 import com.github.mouse0w0.wow.network.packet.server.ServerVerificationPacket;
+import com.github.mouse0w0.wow.profile.User;
 import com.github.mouse0w0.wowspigot.WowSpigot;
 import com.github.mouse0w0.wowspigot.network.handler.ClientVerificationPacketHandler;
 import com.github.mouse0w0.wowspigot.network.handler.KeyBindingActionPacketHandler;
@@ -41,9 +42,13 @@ public class SpigotNetworkManager extends NetworkManagerBase {
 
     @Override
     public void send(Object target, Packet packet) {
-        if(!(target instanceof Player))
+        if (target instanceof Player) {
+            super.send(target, packet);
+        } else if (target instanceof User) {
+            super.send(((User) target).getSource(), packet);
+        } else {
             throw new NetworkException("Couldn't send packet to this target.");
-        super.send(target, packet);
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.github.mouse0w0.wowspigot;
 
 import com.github.mouse0w0.wow.profile.User;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,15 +23,18 @@ public class WowCommand implements CommandExecutor {
                 profile(sender);
                 return true;
         }
+        sender.sendMessage(ChatColor.RED + "未知的指令，请输入/help查看帮助。");
         return true;
     }
 
     private void help(CommandSender sender) {
-
+        sender.sendMessage( "/wow profile 查看当前玩家的Wow数据。");
     }
 
     private void profile(CommandSender sender) {
         if(sender instanceof Player) {
+            if(!sender.hasPermission("wow.profile"))
+                return;
             User user = WowSpigot.getUser((Player) sender);
             sender.sendMessage("Wow IsInitialized: " + (user != null) + " Version: " + (user == null ? 0 : user.getVersion()));
         }

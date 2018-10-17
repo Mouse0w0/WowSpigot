@@ -24,7 +24,7 @@ public class ClientVerificationPacketHandler implements PacketHandler<ClientVeri
 
     private static final Map<Player, User> playerProfile = new WeakHashMap<>();
 
-    public static User getProfile(Player player) {
+    public static User getUser(Player player) {
         return playerProfile.get(player);
     }
 
@@ -36,20 +36,20 @@ public class ClientVerificationPacketHandler implements PacketHandler<ClientVeri
         Bukkit.getPluginManager().registerEvents(this, WowSpigot.getInstance());
     }
 
-    private User createProfile(Player player, int version) {
+    private User createUser(Player player, int version) {
         SpigotUser user = new SpigotUser(player, version);
         playerProfile.put(player, user);
         return user;
     }
 
-    private User createUnsupportProfile(Player player) {
-        return createProfile(player, 0);
+    private User createUnsupportedUser(Player player) {
+        return createUser(player, 0);
     }
 
     @Override
     public void hander(Object sender, ClientVerificationPacket packet) {
         Player player = (Player) sender;
-        User user = createProfile(player, packet.getInternalVersion());
+        User user = createUser(player, packet.getInternalVersion());
         Bukkit.getPluginManager().callEvent(new WowVerificationEvent(player, user));
     }
 
@@ -64,14 +64,14 @@ public class ClientVerificationPacketHandler implements PacketHandler<ClientVeri
                     cancel();
                     return;
                 }
-                if (count >= WowConfig.getVerificationRetryCount()) {
-                    Bukkit.getPluginManager().callEvent(new WowVerificationEvent(event.getPlayer(), createUnsupportProfile(event.getPlayer())));
+                if (count > WowConfig.getVerificationRetryCount()) {
+                    Bukkit.getPluginManager().callEvent(new WowVerificationEvent(event.getPlayer(), createUnsupportedUser(event.getPlayer())));
                     cancel();
                     return;
                 }
                 WowSpigot.getNetwork().send(event.getPlayer(), new ServerVerificationPacket(WowPlatform.getInternalVersion(), WowConfig.getServerUUID()));
                 count++;
             }
-        }.runTaskTimerAsynchronously(WowSpigot.getInstance(), 20L, 20L);
+        }.runTaskTimerAsynchronously(WowSpigot.getInstance(), 20L, 100L);
     }
 }

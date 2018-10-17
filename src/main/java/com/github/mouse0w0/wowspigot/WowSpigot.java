@@ -2,6 +2,7 @@ package com.github.mouse0w0.wowspigot;
 
 import com.github.mouse0w0.wow.PlatformProvider;
 import com.github.mouse0w0.wow.WowPlatform;
+import com.github.mouse0w0.wow.keybinding.Key;
 import com.github.mouse0w0.wow.keybinding.ServerKeyBinding;
 import com.github.mouse0w0.wow.network.NetworkManager;
 import com.github.mouse0w0.wow.profile.Server;
@@ -35,6 +36,14 @@ public class WowSpigot extends JavaPlugin {
         registryManager = new SimpleRegistryManager();
         keyBindingRegistry = new SimpleRegistry<>();
         registryManager.addRegistry(ServerKeyBinding.class, keyBindingRegistry);
+        ServerKeyBinding keyBinding = ServerKeyBinding.builder()
+                .defaultKey(Key.KEY_H)
+                .displayName("测试")
+                .onPress(user -> ((Player) user.getSource()).sendMessage("Hello Wow!"))
+                .build()
+                .setRegistryName("wow:test");
+        System.out.println(keyBindingRegistry.getRegistryEntryType().getName());
+        registryManager.register(keyBinding);
     }
 
     @Override
@@ -46,6 +55,8 @@ public class WowSpigot extends JavaPlugin {
 
         network = new SpigotNetworkManager();
         network.init();
+
+        getServer().getPluginManager().registerEvents(new WowListener(), this);
 
         getCommand("wow").setExecutor(new WowCommand());
 
@@ -70,7 +81,7 @@ public class WowSpigot extends JavaPlugin {
     }
 
     public static User getUser(Player player) {
-        return ClientVerificationPacketHandler.getProfile(player);
+        return ClientVerificationPacketHandler.getUser(player);
     }
 
     public static boolean isInitialized(Player player) {

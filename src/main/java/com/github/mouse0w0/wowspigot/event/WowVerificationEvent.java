@@ -14,15 +14,7 @@ public class WowVerificationEvent extends PlayerEvent {
         this.user = user;
     }
 
-    public int getVersion() {
-        return user.getVersion();
-    }
-
-    public boolean isSupport() {
-        return user.isSupport();
-    }
-
-    public User getWowProfile() {
+    public User getUser() {
         return user;
     }
 

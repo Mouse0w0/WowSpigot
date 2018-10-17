@@ -138,7 +138,7 @@
                             <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
                             <artifactSet>
                                 <includes>
-                                    <include>com.github.Mouse0w0:WowCommon</include>
+                                    <include>com.github.mouse0w0:wow:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
