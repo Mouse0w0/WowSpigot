@@ -6,9 +6,10 @@ import com.github.mouse0w0.wow.keybinding.ServerKeyBinding;
 import com.github.mouse0w0.wow.network.NetworkManager;
 import com.github.mouse0w0.wow.profile.Server;
 import com.github.mouse0w0.wow.profile.User;
+import com.github.mouse0w0.wow.registry.Registry;
 import com.github.mouse0w0.wow.registry.RegistryManager;
+import com.github.mouse0w0.wow.registry.SimpleRegistry;
 import com.github.mouse0w0.wow.registry.SimpleRegistryManager;
-import com.github.mouse0w0.wowspigot.keybinding.ServerKeyBindingManager;
 import com.github.mouse0w0.wowspigot.network.SpigotNetworkManager;
 import com.github.mouse0w0.wowspigot.network.handler.ClientVerificationPacketHandler;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ public class WowSpigot extends JavaPlugin {
     private static WowSpigot instance;
     private static SpigotNetworkManager network;
     private static RegistryManager registryManager;
+    private static Registry<ServerKeyBinding> keyBindingRegistry;
     private static Server server;
 
     public WowSpigot() {
@@ -31,7 +33,8 @@ public class WowSpigot extends JavaPlugin {
     @Override
     public void onLoad() {
         registryManager = new SimpleRegistryManager();
-        registryManager.addRegistry(ServerKeyBinding.class, new ServerKeyBindingManager());
+        keyBindingRegistry = new SimpleRegistry<>();
+        registryManager.addRegistry(ServerKeyBinding.class, keyBindingRegistry);
     }
 
     @Override
@@ -72,6 +75,10 @@ public class WowSpigot extends JavaPlugin {
 
     public static boolean isInitialized(Player player) {
         return ClientVerificationPacketHandler.isInitialized(player);
+    }
+
+    public static Registry<ServerKeyBinding> getKeyBindingRegistry() {
+        return keyBindingRegistry;
     }
 
     public static class SpigotPlatformProvider implements PlatformProvider {

@@ -5,9 +5,12 @@ import com.github.mouse0w0.wow.network.NetworkException;
 import com.github.mouse0w0.wow.network.NetworkManagerBase;
 import com.github.mouse0w0.wow.network.Packet;
 import com.github.mouse0w0.wow.network.packet.client.ClientVerificationPacket;
+import com.github.mouse0w0.wow.network.packet.client.KeyBindingActionPacket;
+import com.github.mouse0w0.wow.network.packet.server.RegisterKeyBindingPacket;
 import com.github.mouse0w0.wow.network.packet.server.ServerVerificationPacket;
 import com.github.mouse0w0.wowspigot.WowSpigot;
 import com.github.mouse0w0.wowspigot.network.handler.ClientVerificationPacketHandler;
+import com.github.mouse0w0.wowspigot.network.handler.KeyBindingActionPacketHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.bukkit.Bukkit;
@@ -20,8 +23,10 @@ public class SpigotNetworkManager extends NetworkManagerBase {
     private final Messenger messenger = Bukkit.getMessenger();
 
     public SpigotNetworkManager() {
-        register(ServerVerificationPacket.class, null);
-        register(ClientVerificationPacket.class, new ClientVerificationPacketHandler());
+        register(ServerVerificationPacket.class, null);  // id 0
+        register(ClientVerificationPacket.class, new ClientVerificationPacketHandler());  // id 1
+        register(RegisterKeyBindingPacket.class, null); // id 2
+        register(KeyBindingActionPacket.class, new KeyBindingActionPacketHandler()); // id 3
     }
 
     public void init() {
