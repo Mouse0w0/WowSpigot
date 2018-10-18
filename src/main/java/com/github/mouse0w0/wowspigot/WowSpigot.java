@@ -33,17 +33,11 @@ public class WowSpigot extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        WowPlatform.setPlatformProvider(new SpigotPlatformProvider());
+
         registryManager = new SimpleRegistryManager();
         keyBindingRegistry = new SimpleRegistry<>();
         registryManager.addRegistry(ServerKeyBinding.class, keyBindingRegistry);
-        ServerKeyBinding keyBinding = ServerKeyBinding.builder()
-                .defaultKey(Key.KEY_H)
-                .displayName("测试")
-                .onPress(user -> ((Player) user.getSource()).sendMessage("Hello Wow!"))
-                .build()
-                .setRegistryName("wow:test");
-        System.out.println(keyBindingRegistry.getRegistryEntryType().getName());
-        registryManager.register(keyBinding);
     }
 
     @Override
@@ -59,8 +53,6 @@ public class WowSpigot extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WowListener(), this);
 
         getCommand("wow").setExecutor(new WowCommand());
-
-        WowPlatform.setPlatformProvider(new SpigotPlatformProvider());
     }
 
     @Override
