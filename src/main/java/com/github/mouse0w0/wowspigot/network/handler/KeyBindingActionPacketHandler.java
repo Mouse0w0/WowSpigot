@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class KeyBindingActionPacketHandler implements PacketHandler<KeyBindingActionPacket> {
     @Override
-    public void hander(Object o, KeyBindingActionPacket keyBindingActionPacket) {
+    public void handle(Object o, KeyBindingActionPacket keyBindingActionPacket) {
         ServerKeyBinding keyBinding = WowSpigot.getKeyBindingRegistry().getValue(keyBindingActionPacket.getKeyBindingId());
         User user = WowSpigot.getUser((Player) o);
         if(keyBindingActionPacket.isPressed())

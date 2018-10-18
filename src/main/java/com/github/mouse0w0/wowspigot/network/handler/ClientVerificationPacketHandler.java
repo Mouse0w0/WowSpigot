@@ -47,7 +47,7 @@ public class ClientVerificationPacketHandler implements PacketHandler<ClientVeri
     }
 
     @Override
-    public void hander(Object sender, ClientVerificationPacket packet) {
+    public void handle(Object sender, ClientVerificationPacket packet) {
         Player player = (Player) sender;
         User user = createUser(player, packet.getInternalVersion());
         Bukkit.getPluginManager().callEvent(new WowVerificationEvent(player, user));
